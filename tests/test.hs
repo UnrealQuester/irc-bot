@@ -9,6 +9,7 @@ testParse = parseOnly parseIrc
 main = defaultMain tests
 tests = testGroup "Tests" [parserTests]
 
+parserTests :: TestTree
 parserTests = testGroup "Parser tests"
     [ testCase "Command only"
         $ testParse "asdf" @?= (Right $ Message "" "asdf" [])
@@ -19,5 +20,5 @@ parserTests = testGroup "Parser tests"
     , testCase "Command param plus message" $
         testParse "MSG msg :hey there" @?= (Right $ Message "" "MSG" ["msg", "hey there"])
     , testCase "Name plus message" $
-        testParse ":tolsun MSG :hey there" @?= (Right $ Message "tolsun" "MSG" ["hey there"])
+        testParse ":tolsun MSG test :hey there" @?= (Right $ Message "tolsun" "MSG" ["test", "hey there"])
     ]
